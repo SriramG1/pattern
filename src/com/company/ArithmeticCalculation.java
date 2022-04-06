@@ -67,10 +67,8 @@ public class ArithmeticCalculation {
             calculation.str = value;
             calculation.calculator();
             String result = "";
-            for (int i = 0; i < calculation.str.length(); i++) {
-                if (Character.isDigit(calculation.str.charAt(i))) {
+            for (int i = 0; i < calculation.str.length()-1; i++) {
                     result += calculation.str.charAt(i);
-                }
             }
             System.out.println(value+" = "+result);
             System.out.println("Press (1) for continue (0) for exit...");
