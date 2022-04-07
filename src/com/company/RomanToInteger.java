@@ -33,7 +33,7 @@ public class RomanToInteger {
     }
     public static void main(String[] args) {
         RomanToInteger obj = new RomanToInteger();
-        System.out.println(obj.convertor("LX"));
+        System.out.println(obj.convertor("CMXVI"));
 
     }
 }

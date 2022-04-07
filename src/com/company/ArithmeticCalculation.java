@@ -37,26 +37,37 @@ public class ArithmeticCalculation {
                 number="";
             }
         }
+        int divideAndMul=0;
         for(int i=0;i<operators.size();i++){
             if((operators.get(i)=='/')||(operators.get(i)=='*')){
                 char operator=operators.get(i);
                 String cal=convertor(operands.get(i),operands.get(i+1),operator);
+                int val = Integer.parseInt(cal);
                 operators.remove(i);
                 operands.remove(i+1);
                 operands.set(i,cal);
                 i=-1;
+                if(i==operators.size()-1){
+                    divideAndMul=val;
+                }
             }
         }
+        int addAndSub=0;
         for(int i=0;i<operators.size();i++){
             if((operators.get(i)=='+')||(operators.get(i)=='-')){
                 char operator=operators.get(i);
                 String cal=convertor(operands.get(i),operands.get(i+1),operator);
+                int val=Integer.parseInt(cal);
                 operators.remove(i);
                 operands.remove(i+1);
                 operands.set(i,cal);
                 i=-1;
+                if(i==operators.size()-1){
+                    addAndSub=val;
+                }
             }
         }
+        System.out.println("Answer is : " +(divideAndMul+addAndSub));
     }
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
@@ -66,18 +77,11 @@ public class ArithmeticCalculation {
             ArithmeticCalculation calculation = new ArithmeticCalculation();
             calculation.str = value;
             calculation.calculator();
-            String result = "";
-            for (int i = 0; i < calculation.str.length()-1; i++) {
-                    result += calculation.str.charAt(i);
-            }
-            System.out.println(value+" = "+result);
             System.out.println("Press (1) for continue (0) for exit...");
             char choice =in.next().charAt(0);
-            boolean stopper=true;
             if(choice=='0'){
                break;
             }
-
         }
     }
 }
