@@ -5,8 +5,60 @@ import java.util.Scanner;
 
 public class ArithmeticCalculation {
     String str;
-    ArrayList<Character>operators = new ArrayList<>();
-    ArrayList<String>operands = new ArrayList<>();
+    public int counter(String str){
+        int count=0;
+        for(int i=0;i<str.length();i++){
+            if(str.charAt(i)=='('){
+                count++;
+            }
+        }
+        return count;
+    }
+    public String split(){
+        String sub="";
+        boolean stopper = false;
+        for(int i=0;i<str.length();i++){
+            if(str.charAt(i)=='('){
+                i++;
+                for(int j=i;j<str.charAt(j);j++){
+                    if(str.charAt(j)==')'){
+                        stopper=true;
+                        break;
+                    }
+                    sub+=str.charAt(j);
+                    if(str.charAt(j)=='('){
+                        sub="";
+                    }
+                }
+            }
+            if(stopper){
+                break;
+            }
+        }
+        return sub;
+    }
+    public static void main(String[] args) {
+        ArithmeticCalculation cal = new ArithmeticCalculation();
+        Driver driver = new Driver();
+        Scanner in = new Scanner(System.in);
+        System.out.println("Enter your value : ");
+        String value = in.next();
+        cal.str=value;
+        int count=cal.counter(value);
+        for(int i=1;i<=count;i++) {
+            String result = cal.split();
+            int res = driver.calculator(result);
+            if(count==i){
+                res=Math.abs(res);
+            }
+            cal.str = cal.str.replace("(" + result + ")", Integer.toString(res));
+        }
+        int answer=driver.calculator(cal.str);
+        System.out.println("Your answer is : "+answer);
+    }
+}
+class Driver{
+    private String str;
     public String convertor(String strNum1,String strNum2,char operator){
         int num1=Integer.parseInt(strNum1);
         int num2=Integer.parseInt(strNum2);
@@ -20,7 +72,10 @@ public class ArithmeticCalculation {
         str=str.replace(strNum1+operator+strNum2,Integer.toString(result));
         return Integer.toString(result);
     }
-    public void calculator(){
+    public int calculator(String str){
+        ArrayList<Character>operators = new ArrayList<>();
+        ArrayList<String>operands = new ArrayList<>();
+        this.str=str;
         for(int i=0;i<str.length();i++){
             if(!(str.charAt(i)>='0'&&str.charAt(i)<='9')) {
                 operators.add(str.charAt(i));
@@ -67,21 +122,6 @@ public class ArithmeticCalculation {
                 }
             }
         }
-        System.out.println("Answer is : " +(divideAndMul+addAndSub));
-    }
-    public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
-        while (true) {
-            System.out.println("Enter your value : ");
-            String value = in.next();
-            ArithmeticCalculation calculation = new ArithmeticCalculation();
-            calculation.str = value;
-            calculation.calculator();
-            System.out.println("Press (1) for continue (0) for exit...");
-            char choice =in.next().charAt(0);
-            if(choice=='0'){
-               break;
-            }
-        }
+        return divideAndMul+addAndSub;
     }
 }
